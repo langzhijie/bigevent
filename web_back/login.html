@@ -9,6 +9,8 @@
     <link rel="stylesheet" type="text/css" href="css/reset.css">
     <link rel="stylesheet" type="text/css" href="css/iconfont.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
+
+    <script src="js/jquery-1.12.4.min.js"></script>
 </head>
 
 <body>
@@ -23,11 +25,75 @@
             <form class="login_form">
                 <i class="iconfont icon-user"></i>
                 <i class="iconfont icon-key"></i>
-                <input type="text" class="input_txt" placeholder="邮箱/手机号">
-                <input type="password" class="input_pass" placeholder="密码">
-                <input type="submit" class="input_sub" value="登 录">
+                <input type="text" id="user" class="input_txt" placeholder="邮箱/手机号">
+                <input type="password" id="pwd"  class="input_pass" placeholder="密码">
+                <!-- submit的按钮在表单中,它会产生页面跳转 所以换成button -->
+                <input type="button" id="lognbtn"  class="input_sub" value="登 录">
             </form>
         </div>
     </div> 
 </body>
+    <script>
+    /*
+    用户登录
+    思路:
+    给按钮添加点击事件
+    1.收集用户信息 简单判断
+    2.请求ajax根据接口反馈做判断
+
+    */
+    
+    </script>
+
+    <script>
+    
+    $(function () {
+        function userlogin(name ,password) {
+            $.post("http://192.168.172.82:8000/admin/login",{
+                "user_name":name,
+                "password":password
+            }).then(function(res){
+                if (res.code==200) {
+                    window.location.href="./index.html";
+                    
+                }else{
+                    alert(res.msg);
+                }
+            })
+            
+        }
+
+
+
+
+
+
+
+        $("#lognbtn").on("click",function(){
+            var name= $("#user").val().trim();
+            var password=$("#pwd").val().trim();
+            if (name.length==0||password.length==0) {
+                alert("用户名或密码不能为空");
+                return;
+            };
+
+            // 用户登录
+            userlogin(name,password);
+
+        })
+
+
+
+
+
+
+        
+    })
+    
+    
+    
+    
+    
+    
+    </script>
 </html>
