@@ -44,7 +44,8 @@
         <div class="user_center_link">
             <a href="user.html" onclick="setMenu(3,0)" target="main_frame">个人中心</a>
             <img src="images/2.jpg" alt="person">
-            <a href="#"><i class="iconfont icon-tuichu"></i> 退出</a>
+            <!-- a标签禁止跳转 -->
+            <a href="javascript:;" id="uesrout"><i class="iconfont icon-tuichu"></i> 退出</a>
         </div>
     </div>
 
@@ -102,6 +103,81 @@
            }
         }
 
+    </script>
+
+
+
+    <script>
+        // 思路
+        /*
+        点击按钮
+        发送请求
+        
+        */
+
+
+
+      $(function () {
+        var user={
+            uesr_out:function () {
+                $.post("http://192.168.172.82:8000/admin/logout").then(function (res) {
+                if (res.code==200) {
+                    alert("退出成功");
+                    window.location.href="./login.html";
+     
+                }else{
+                    alert(res.msg);
+                }
+
+            });
+                
+            }
+
+
+
+
+
+
+
+
+
+
+        };
+
+
+
+          // 退出登录
+          $("#uesrout").on("click",function(){
+            
+           user. uesr_out();
+
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+          
+      })
+        
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     </script>
 
 </body>
