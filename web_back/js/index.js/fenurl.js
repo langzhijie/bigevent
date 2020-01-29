@@ -16,4 +16,7 @@ category_get:BASISURL+"/admin/category_search",
 // 获取文章类别 新增名称
 category_add:BASISURL+"/admin/category_add",
 
+// 获取文章类别 删除
+category_remove:BASISURL+"/admin/category_delete",
+
  }

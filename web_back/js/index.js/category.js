@@ -9,5 +9,10 @@
      add:function (name,slug) {
          return $.post(PATH.category_add,{"name":name,"slug":slug});
          
-     }
+     },
+    //  删除文章类别
+    remove:function (id) {
+        return $.post(PATH.category_remove,{"id":id});
+        
+    }
  }
