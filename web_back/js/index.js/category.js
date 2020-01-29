@@ -14,5 +14,9 @@
     remove:function (id) {
         return $.post(PATH.category_remove,{"id":id});
         
+    },
+    // 编辑文章分类
+    edit:function (id,name,slug) {
+        return $.post(PATH.category_edit,{"id":id,"name":name,"slug":slug});
     }
  }
