@@ -12,4 +12,8 @@ user_loginfoUrl:BASISURL+"/admin/getuser",
 
 // 获取文章类别
 category_get:BASISURL+"/admin/category_search",
+
+// 获取文章类别 新增名称
+category_add:BASISURL+"/admin/category_add",
+
  }

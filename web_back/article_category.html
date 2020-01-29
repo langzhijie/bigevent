@@ -16,7 +16,7 @@
     <script src="./js/index.js/template-web.js"></script>
     <script src="./js/index.js/fenurl.js"></script>
     <script src="./js/index.js/category.js"></script>
-    
+
 </head>
 
 <body>
@@ -66,12 +66,12 @@
                 <div class="modal-body">
                     <form>
                         <div class="form-group">
-                            <label for="recipient-name" class="control-label">分类名称:</label>
-                            <input type="text" class="form-control" id="recipient-name">
+                            <label for="name" class="control-label">分类名称:</label>
+                            <input type="text" class="form-control" id="name">
                         </div>
                         <div class="form-group">
-                            <label for="message-text" class="control-label">分类别名:</label>
-                            <input type="text" class="form-control" id="recipient-name">
+                            <label for="slug" class="control-label">分类别名:</label>
+                            <input type="text" class="form-control" id="slug">
                         </div>
                     </form>
                 </div>
@@ -117,26 +117,70 @@
                 class="btn btn-info btn-xs">编辑</a>
             <a href="javascript:deleteTr( 4 );" class="btn btn-danger btn-xs">删除</a>
         </td>
-    </tr>
-
-
+    </tr> 
     {{/each}}
     
     
 </script>
-   
+
     <script>
-        // 1.从接口拿回数据显示在表格
-        
-        category.get().then(function (res) {
-            // 用模板引擎渲染
-           var htmlStr = template("tmp_cate",res)
-           console.log(htmlStr);
-           
-        //    把html结构放到tbody中
-        $("#category_table").html(htmlStr);
-        });
-    
+         getandshow();
+        function getandshow() {
+            // 1.从接口拿回数据显示在表格
+            category.get().then(function (res) {
+                // 用模板引擎渲染
+                var htmlStr = template("tmp_cate", res)
+
+
+                //    把html结构放到tbody中
+                $("#category_table").html(htmlStr);
+            });
+
+        }
+
+        // 2.添加功能 
+        // 点击添加按钮 收集用户信息 
+        // 发送请求 从新加载列表
+
+        $("#model_add").on("click", function () {
+            // 拿到数据
+            var name = $("#name").val().trim();
+            var slug = $("#slug").val().trim();
+            // 判断拿到的数据是否为空
+            if (name.length == 0 || slug.length == 0) {
+                alert("不能为空");
+                return;
+
+            }
+            // 发送请求
+            category.add(name, slug).then(function (res) {
+                if (res.code == 200) {
+                    //   1.清空了用户输入
+                    $("#name").val("");
+                    $("#slug").val("");
+
+                    //    2.隐藏模态框
+                    $('#addModal').modal('hide');
+                    // 3.从新加载数据
+                    getandshow();
+
+
+                } else {
+                    alert(res.msg);
+                }
+
+
+            })
+
+
+        })
+
+        // 点击关闭按钮关闭模态框
+        $("#model_shutoff").on("click", function () {
+            //    2.隐藏模态框
+            $('#addModal').modal('hide');
+
+        })
     </script>
 
 </body>
