@@ -22,4 +22,8 @@ category_remove:BASISURL+"/admin/category_delete",
 // 获取文章类别 编辑 保存
 category_edit:BASISURL+"/admin/category_edit",
 
+
+// 获取文章
+article_get:BASISURL+"/admin/search",
+
  }
