@@ -43,7 +43,8 @@
                             <option value="草稿">草稿</option>
                             <option value="已发布">已发布</option>
                         </select>
-                        <button id="btnSearch" class="btn btn-default btn-sm">筛选</button>
+                        <!-- 如果表单中的按钮没有type，则它默认会提交这个表单 -->
+                        <button id="btnSearch" type="button" class="btn btn-default btn-sm">筛选</button>
                     </form>
                 </div>
                 <div class="col-xs-6">
@@ -76,9 +77,10 @@
                     </tr> -->
                 </tbody>
             </table>
+
             <div class="row text-center">
-                <!-- <ul class="pagination pagination-sm" id="pagination"> -->
-                <!-- <li class="page-item first disabled"><a href="#" class="page-link">首页</a></li>
+                <ul class="pagination pagination-sm" id="pagination">
+                    <!-- <li class="page-item first disabled"><a href="#" class="page-link">首页</a></li>
                     <li class="page-item prev disabled"><a href="#" class="page-link">上一页</a></li>
                     <li class="page-item active"><a href="#" class="page-link">1</a></li>
                     <li class="page-item"><a href="#" class="page-link">2</a></li>
@@ -89,8 +91,7 @@
                     <li class="page-item"><a href="#" class="page-link">7</a></li>
                     <li class="page-item next"><a href="#" class="page-link">下一页</a></li>
                     <li class="page-item last"><a href="#" class="page-link">尾页</a></li> -->
-                <!-- </ul> -->
-                <ul id="pagination" class="pagination-sm"></ul>
+                </ul>
             </div>
 
         </div>
@@ -136,6 +137,7 @@
         var curPage = 1;
         var curType = ''; //全局变量 当前查询的文章编号
         var curStatus=''; //全局变量 当前查询的文章状态
+        var curTotalPage;//用来记录上一次获取的总页数
 
 
         // 1.获取文章类别信息 并显示在下拉列表中
@@ -158,6 +160,13 @@
                     // 渲染到表格
                     var htmlStr = template("tmp_table", res)
                     $("#tbody").html(htmlStr)
+                    // 如果前后获取的总页码不一样 则需要把分页插件 destroy(); 
+                    // 再重新设置 这样才能保证总页码正确
+                    if (curTotalPage!==res.totalPage) {
+                        $('#pagination').twbsPagination("destroy");
+                        curTotalPage=res.totalPage;
+                    }
+
 
                     // 分页插件
                     $('#pagination').twbsPagination({
@@ -192,13 +201,16 @@
         // 3.1 获取用户的选择 
         // 3.2 调接口 传入用户选择
         $("#btnSearch").click(function () {
-            // 把页码重置为第一页
+        //     // 把页码重置为第一页
             curPage=1;
-            // 把用户的选择存入全局变量
+        //     // 把用户的选择存入全局变量
            curType=$('#selCategory').val();//文章类型编号
            curStatus=$('#selStatus').val();//文章状态
+           console.log(curType,curStatus);
+           
            
            getandshow();
+       
         
         })
     </script>
