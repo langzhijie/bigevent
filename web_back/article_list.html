@@ -122,7 +122,7 @@
                         <td class="text-center">{{item.state}}</td>
                         <td class="text-center">
                             <a href="article_edit.html" class="btn btn-default btn-xs">编辑</a>
-                            <a href="javascript:;"  data-id="{{item.id}}"class="btn btn-danger btn-xs">删除</a>
+                            <a href="javascript:;"  data-id="{{item.id}}"class="btn btn-danger btn-xs del">删除</a>
                         </td>
                     </tr>
 
@@ -213,6 +213,42 @@
        
         
         })
+    
+    
+        // 4. 文章删除功能
+        //  事件委托 
+        // 获取id 调接口
+        $("#tbody").on("click",".del",function () {
+        //   if(confirm("你确定要删除吗？")==true){
+        //     var id=$(this).attr("data-id");
+        //     article.del(id).then(function (res) {
+                
+        //         if (res.code==200) {
+        //             // 删除成功
+        //             getandshow();
+                    
+        //         }else{
+        //             alert(res.msg)
+        //         }
+        //     })
+        //   }
+        if (!confirm("你确定要删除吗？")) {
+            return;
+        }
+
+        var id=$(this).attr("data-id");
+            article.del(id).then(function (res) {
+                
+                if (res.code==200) {
+                    // 删除成功
+                    getandshow();
+                    
+                }else{
+                    alert(res.msg)
+                }
+            })
+        })
+    
     </script>
 
 </body>

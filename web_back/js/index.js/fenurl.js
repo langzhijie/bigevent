@@ -25,5 +25,6 @@ category_edit:BASISURL+"/admin/category_edit",
 
 // 获取文章
 article_get:BASISURL+"/admin/search",
-
+// 删除文章
+article_del:BASISURL+"/admin/article_delete",
  }
