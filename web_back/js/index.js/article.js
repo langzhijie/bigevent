@@ -10,5 +10,17 @@
         return $.get(PATH.article_del,{"id":id});
         
     },
- 
+    // 添加文章
+    add:function (fd) {
+        $.ajax({
+            url:PATH.article_add,
+            type:"post",
+            data:fd,
+            processData:false,//不允许处理数据
+            contentType:false,//不要设置请求头
+        })
+      
+
+    
+    }
  }
