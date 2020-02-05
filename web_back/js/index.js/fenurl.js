@@ -1,6 +1,6 @@
 // 本js文件存放所有的接口文件
 // basis根基
-var BASISURL="http://192.168.1.101:8000";
+var BASISURL="http://localhost:8000";
  var PATH={
      // 登录
 user_loginUrl: BASISURL+"/admin/login",
