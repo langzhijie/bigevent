@@ -1,6 +1,7 @@
 // 本js文件存放所有的接口文件
 // basis根基
-var BASISURL="http://localhost:8000";
+// var BASISURL="http://localhost:8000";
+var BASISURL="http://192.168.1.100:8000";
  var PATH={
      // 登录
 user_loginUrl: BASISURL+"/admin/login",
@@ -28,5 +29,7 @@ article_get:BASISURL+"/admin/search",
 // 删除文章
 article_del:BASISURL+"/admin/article_delete",
 // 添加文章
-article_add:BASISURL+"/admin/article_publish"
+article_add:BASISURL+"/admin/article_publish",
+// 编辑后再保存
+article_edit: BASISURL + '/admin/article_edit'
  }
