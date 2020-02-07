@@ -178,7 +178,7 @@
 <!-- 文章类型的模板 -->
 <script id="cate" type="text/html">
 {{each data item}}
-<li><a href="./list.html">{{item.name}}</a></li>
+<li><a href="./list.html?id={{item.id}}">{{item.name}}</a></li>
 {{/each}}
 
 </script>
@@ -234,6 +234,8 @@
 
 
 
+
+
 <script>
 //   游客  文章类别获取数据
     category.get().then(function (res) {
@@ -282,7 +284,9 @@
             alert(res.msg);
         }
         
-    })
+    });
+
+    
 
 
 </script>
