@@ -7,7 +7,7 @@
      },
       /**
      * 获取文章排行
-     * @param {*} type 
+     * @param {*} type  文章类别编号  如果不写就是全部的类别排行
      */
     getRank:function(type){
         return $.get(PATH.article_rank,{'type':type})
