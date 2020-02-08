@@ -1,7 +1,7 @@
 // 本js文件存放所有的接口文件
 // basis根基
-var BASISURL="http://localhost:8000";
- var PATH={
+const BASISURL="http://localhost:8000";
+ let PATH={
 
 
 // 获取文章类别
