@@ -23,7 +23,11 @@
     // type 文章类型  page 表示当前第几页
     getList:function(type,page){
         return $.get(PATH.article_get,{"type":type,"page":page})
-    }
+    },
+    getDetail:function(id){
+        return $.get(PATH.article_detail,{"id":id})
+    },
+    
     
 
   
