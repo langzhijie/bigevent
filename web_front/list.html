@@ -58,7 +58,7 @@
         <div class="left_con setfr">
 
             <div class="list_title">
-                <h3>科 技</h3>
+                <h3 id="cateName">科 技</h3>
             </div>
 
             <div id="list">
@@ -216,7 +216,17 @@
         $('#left_menu').html(htmlStr);
 
         // 追加一些内容
-        $('#level_two_menu').append(htmlStr)
+        $('#level_two_menu').append(htmlStr);
+
+        // 与当前id进行比较 找到要显示在页面上的文字
+        // res.data是数组 循环比较后设置到页面
+        res.data.forEach(function (item) {
+            if (item.id==id) {
+             $("#cateName").text(item.name);
+                
+            }
+            
+        })
     });
     // 2.游客-列表页内容展示
     // 1.根据当前的类型id取出文章 并渲染
@@ -233,9 +243,9 @@
 
 
             // 如果只有一页不需要分页条
-            if (res.pages<=1) {
+            if (res.pages <= 1) {
                 return;
-                
+
             }
             // 分页功能实现
 
@@ -252,7 +262,7 @@
                 last: '尾页',
                 onPageClick: function (event, page) {
                     // 更新全局变量 page就是用户点击的页码
-                    curPage=page;
+                    curPage = page;
                     getandshow();
                 }
             });
@@ -261,20 +271,22 @@
 
     }
 
-    // 一周热门排行
+    // 3.一周热门排行
     // 思路
     // 1.调接口取数据 渲染
 
     article.getRank(id).then(function (res) {
-        if (res.code==200) {
-            var htmlStr=template("tmpRank",res);
+        if (res.code == 200) {
+            var htmlStr = template("tmpRank", res);
             $("#paihang").html(htmlStr);
-            
-        }else{
+
+        } else {
             alert(res.msg);
         }
-        
-    })
+
+    });
+
+  
 
 
 </script>
