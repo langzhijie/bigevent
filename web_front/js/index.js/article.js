@@ -18,6 +18,11 @@
      */
     getLastest:function(){
         return $.get(PATH.article_last)
+    },
+    // 在列表页获取文章列表数据
+    // type 文章类型  page 表示当前第几页
+    getList:function(type,page){
+        return $.get(PATH.article_get,{"type":type,"page":page})
     }
     
 
