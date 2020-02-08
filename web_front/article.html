@@ -12,12 +12,16 @@
 
 
     <script src="./js/jquery-1.12.4.min.js"></script>
-    <script src="./js/index.js/template-web.js"></script>
-    <script src="./js/index.js/jquery.twbsPagination.js"></script>
-    <script src="./js/index.js/fenurl.js"></script>
-    <script src="./js/index.js/category.js"></script>
+    
     <script src="./js/index.js/article.js"></script>
-
+    
+    <script src="./js/index.js/template-web.js"></script>
+    <script src="./js/index.js/fenurl.js"></script>
+    <script src="./js/index.js/comment.js"></script>
+  
+    
+  
+  
 </head>
 
 <body>
@@ -68,7 +72,8 @@
                 当前位置： <a href="#">首页</a> &gt; <a href="#">科技</a> &gt; 文章详情
             </div>
             <h3 class="article_title" id="title"></h3>
-            <div class="article_info"><span id="author"></span> 发布于 <span id="date"></span>&nbsp;&nbsp;&nbsp;分类: <span id="type_name"></span>
+            <div class="article_info"><span id="author"></span> 发布于 <span id="date"></span>&nbsp;&nbsp;&nbsp;分类: <span
+                    id="type_name"></span>
                 &nbsp;&nbsp;&nbsp;阅读:( <span id="read"></span> )&nbsp;&nbsp;&nbsp;评论: (<span id="comment"></span>)</div>
             <div class="article_con" id="content">
 
@@ -92,50 +97,21 @@
             <form action="" class="comment_form">
                 <div class="form_group">
                     <label>用户名：</label>
-                    <input type="text" placeholder="请输入用户名" class="comment_name">
+                    <input type="text" placeholder="请输入用户名" class="comment_name" id="comment_name">
                 </div>
                 <div class="form_group">
                     <label>评论内容：</label>
-                    <textarea placeholder="请发表您的评论" class="comment_input"></textarea>
+                    <textarea placeholder="请发表您的评论" class="comment_input" id="comment_content"></textarea>
                 </div>
                 <div class="form_group">
-                    <input type="submit" name="" value="评 论" class="comment_sub"></div>
+                    <input type="button" name="" value="评 论" id="btn" class="comment_sub"></div>
             </form>
 
             <div class="comment_count">
                 4条评论
             </div>
 
-            <div class="comment_list_con">
-                <div class="comment_detail_list">
-                    <div class="person_pic fl">乔</div>
-                    <div class="name_time fl"><b>虚竹</b><span>4小时前</span></div>
-                    <div class="comment_text fl">
-                        遏制茅台酒价格过快上涨，多渠道供给，就不一定要买，租茅台酒也可以的，租售同权。开发共有产权茅台酒，让老百姓喝得起茅台酒，饮者有其酒。
-                    </div>
-                </div>
-                <div class="comment_detail_list">
-                    <div class="person_pic fl">段</div>
-                    <div class="name_time fl"><b>虚竹</b><span>4小时前</span></div>
-                    <div class="comment_text fl">
-                        遏制茅台酒价格过快上涨，多渠道供给，就不一定要买，租茅台酒也可以的，租售同权。开发共有产权茅台酒，让老百姓喝得起茅台酒，饮者有其酒。
-                    </div>
-                </div>
-                <div class="comment_detail_list">
-                    <div class="person_pic fl">虚</div>
-                    <div class="name_time fl"><b>虚竹</b><span>4小时前</span></div>
-                    <div class="comment_text fl">
-                        遏制茅台酒价格过快上涨，多渠道供给，就不一定要买，租茅台酒也可以的，租售同权。开发共有产权茅台酒，让老百姓喝得起茅台酒，饮者有其酒。
-                    </div>
-                </div>
-                <div class="comment_detail_list">
-                    <div class="person_pic fl">王</div>
-                    <div class="name_time fl"><b>虚竹</b><span>4小时前</span></div>
-                    <div class="comment_text fl">
-                        遏制茅台酒价格过快上涨，多渠道供给，就不一定要买，租茅台酒也可以的，租售同权。开发共有产权茅台酒，让老百姓喝得起茅台酒，饮者有其酒。
-                    </div>
-                </div>
-            </div>
+            <div class="comment_list_con" id="comment_list"></div>
         </div>
         <div class="right_con setfl">
             <div class="common_wrap">
@@ -215,40 +191,96 @@
     </div>
 
 </body>
+<script id="tmp" type="text/html">
+    {{each data item}}
+    <div class="comment_detail_list">
+        <div class="person_pic fl">{{item.name.substr(0,1)}}</div>
+        <div class="name_time fl"><b>{{item.name}}</b><span>{{item.relativeTime}}</span></div>
+        <div class="comment_text fl">
+            {{item.content}}
+        </div>
+    </div>
+    {{/each}}
+
+</script>
 <script>
-// 1.获取从地址栏中传入的文章编号
+    // 1.获取从地址栏中传入的文章编号
 
-var id=location.search.substr(4);
-// 2.调用接口 获取本篇文章的详情 显示到页面 
+    var id = location.search.substr(4);
+    // 2.调用接口 获取本篇文章的详情 显示到页面 
 
-article.getDetail(id).then(function (res) {
+    article.getDetail(id).then(function (res) {
+
+        if (res.code == 200) {
+            var t = res.data;
+            $('#author').html(t.author);
+            $('#comment').html(t.comment);
+            $('#content').html(t.content);
+            $('#date').html(t.date);
+            $('#read').html(t.read);
+            $('#title').html(t.title);
+            $('#type_name').html(t.type_name);
+            // 上一篇 下一篇
+            if (t.prev) {
+                $('#prev').attr('href', './article.html?id=' + t.prev.id);
+                $('#prev').text(t.prev.title);
+            } else {
+                $('#prev').text('无');
+            }
+            if (t.next) {
+                $('#next').attr('href', './article.html?id=' + t.next.id)
+                $('#next').text(t.next.title)
+            } else {
+                $('#next').text('无');
+            }
+
+        } else {
+            alert(res.msg)
+        }
+
+
+    })
+    // 评论列表
+    getComment() ;
+    function getComment(){
+            comment.get(id).then(function(res){
+                if(res.code ==200){
+                   
+                    var htmlStr = template('tmp', res)
+                    $('#comment_list').html( htmlStr );
+                }
+            })
+        }
+
+    // 4.添加评论
+
+    $("#btn").click(function (res) {
+        // 收集用户信息 调接口
+        var name = $('#comment_name').val().trim();
+        var content = $('#comment_content').val().trim();
+        // 简单判断拿到的内容是否为空
+        if (name.length === 0 || content.length === 0) {
+            alert('不能为空')
+            return;
+        };
+        // 调用接口
+        comment.add(name,content,id).then(function (res) {
+            if (res.code==200) {
+                $('#comment_name').val("")
+                $('#comment_content').val("");
+                getComment();
+                
+                
+            }else{
+                alert(res.msg);
+            }
+            
+            
+        })
+
+    })
+
     
-    if (res.code==200) {
-        var t=res.data;
-        $('#author').html( t.author);
-        $('#comment').html(t.comment);
-        $('#content').html(t.content);
-        $('#date').html(t.date);
-        $('#read').html(t.read);
-        $('#title').html(t.title);
-        $('#type_name').html(t.type_name);
-        // 上一篇 下一篇
-        $("#next").attr("href","./article.html?id="+t.next.id);
-        $("#next").text(t.next.title);
-
-        $("#prve").attr("href","./article.html?id="+t.prve.id);
-        $("#prve").text(t.prve.title);
-
-        
-    }else{
-        alert(res.msg)
-    }
-    
-    
-})
-
-
-
 </script>
 
 </html>

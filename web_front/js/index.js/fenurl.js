@@ -20,4 +20,9 @@ article_rank:BASISURL+"/rank",
 article_last:BASISURL+"/lastest",
 // 获取文章详情
 article_detail:BASISURL+"/article",
+// 发表评论
+article_add:BASISURL+"/post_comment",
+
+// 获取评论
+comment_get: BASISURL + '/get_comments'
  }
